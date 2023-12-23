@@ -24,23 +24,18 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // Xử lý logic khi báo thức được kích hoạt
         showNotification();
         playAlarmSound();
         vibrate();
 
-        // Trả về kiểu dịch vụ
         return START_NOT_STICKY;
     }
 
     private void showNotification() {
-        // Tạo thông báo
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String channelId = "default_channel_id";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, "Default Channel", NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(channel);
-        }
+        NotificationChannel channel = new NotificationChannel(channelId, "Default Channel", NotificationManager.IMPORTANCE_HIGH);
+        notificationManager.createNotificationChannel(channel);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_baseline_access_alarm)
@@ -55,23 +50,20 @@ public class AlarmService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         builder.setContentIntent(pendingIntent);
 
-        // Hiển thị thông báo
         Notification notification = builder.build();
         notificationManager.notify(1, notification);
     }
 
     private void playAlarmSound() {
-        // Phát âm thanh chuông báo thức
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         Ringtone ringtone = RingtoneManager.getRingtone(this, alarmSound);
         ringtone.play();
     }
 
     private void vibrate() {
-        // Rung máy
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator != null) {
-            long[] pattern = {0, 1000, 1000}; // Rung 1 giây, nghỉ 1 giây, lặp lại
+            long[] pattern = {0, 1000, 1000};
             vibrator.vibrate(pattern, 0);
         }
     }
