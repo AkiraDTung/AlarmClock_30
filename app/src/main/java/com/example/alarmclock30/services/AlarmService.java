@@ -12,6 +12,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 
 import androidx.annotation.Nullable;
@@ -64,7 +65,8 @@ public class AlarmService extends Service {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator != null) {
             long[] pattern = {0, 1000, 1000};
-            vibrator.vibrate(pattern, 0);
+            VibrationEffect vibrationEffect = VibrationEffect.createWaveform(pattern, 0);
+            vibrator.vibrate(vibrationEffect);
         }
     }
 

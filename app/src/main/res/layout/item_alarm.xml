@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/tvTime"
             android:layout_width="0dp"
@@ -18,7 +19,9 @@
             android:layout_weight="0.6"
             android:gravity="start"
             android:layout_gravity="center_vertical"
+            android:text="11:35 PM"
             android:textColor="#CA5079"
+            android:paddingHorizontal="20dp"
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.SwitchCompat

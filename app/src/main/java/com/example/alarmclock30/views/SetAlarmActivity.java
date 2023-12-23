@@ -27,7 +27,6 @@ public class SetAlarmActivity extends AppCompatActivity {
     private AlarmAdapter alarmAdapter;
     private AlarmReceiver alarmReceiver;
     private AlarmManager alarmManager;
-    private PendingIntent alarmPendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class SetAlarmActivity extends AppCompatActivity {
     private void init() {
         alarmReceiver = new AlarmReceiver();
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
         registerAlarmReceiver();
     }
 
@@ -62,7 +60,7 @@ public class SetAlarmActivity extends AppCompatActivity {
 
     private void setAlarm(int hour, int minute) {
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-        alarmPendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_IMMUTABLE);
         Calendar calendar = Calendar.getInstance();
         long currentTime = calendar.getTimeInMillis();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
