@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -41,13 +42,11 @@ public class SetAlarmActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         binding = null;
-        unregisterAlarmReceiver();
     }
 
     private void init() {
         alarmReceiver = new AlarmReceiver();
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        registerAlarmReceiver();
     }
 
     private void controlAction() {
@@ -59,31 +58,20 @@ public class SetAlarmActivity extends AppCompatActivity {
     }
 
     private void setAlarm(int hour, int minute) {
-        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_IMMUTABLE);
         Calendar calendar = Calendar.getInstance();
-        long currentTime = calendar.getTimeInMillis();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
-        long alarmTime = calendar.getTimeInMillis();
 
-        if (alarmTime <= currentTime) {
-            alarmTime += 24 * 60 * 60 * 1000;
-        }
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, alarmPendingIntent);
-        Toast.makeText(this, "Báo thức đã được đặt", Toast.LENGTH_SHORT).show();
-    }
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-    private void registerAlarmReceiver() {
-        IntentFilter filter = new IntentFilter("android.intent.action.ALARM_RECEIVER");
-        registerReceiver(alarmReceiver, filter);
-    }
-
-    private void unregisterAlarmReceiver() {
-        if (alarmReceiver != null) {
-            unregisterReceiver(alarmReceiver);
+        if (alarmManager != null) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            Toast.makeText(this, "Đã đặt báo thức", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 }
