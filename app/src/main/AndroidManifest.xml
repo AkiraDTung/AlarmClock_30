@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +22,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +31,14 @@
         </activity>
 
         <activity
-            android:name=".SetAlarm"
+            android:name=".views.SetAlarmActivity"
             android:exported="true">
         </activity>
 
-        <receiver android:name=".MyReceiver" />
+        <receiver android:name=".receivers.AlarmReceiver"
+            android:exported="false"/>
+
+        <service android:name=".services.AlarmService" />
 
     </application>
 </manifest>

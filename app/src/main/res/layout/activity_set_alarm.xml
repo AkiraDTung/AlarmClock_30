@@ -4,43 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lighter_gray"
-    tools:context=".SetAlarm">
+    android:background="@color/palePink"
+    tools:context=".views.SetAlarmActivity">
 
     <TimePicker
-        android:id="@+id/tp"
-        android:layout_width="382dp"
-        android:layout_height="149dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="45dp"
-        android:amPmTextColor="#d178b0"
+        android:id="@+id/timePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:timePickerMode="spinner"
-        app:layout_constraintBottom_toTopOf="@+id/timerButton"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddAlarm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:numbersTextColor="@color/pink"
+        android:numbersBackgroundColor="@color/pink"
+        android:numbersSelectorColor="@color/pink"
+        android:amPmTextColor="@color/pink"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/timerButton"
+        android:id="@+id/btnAddAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="63dp"
-        android:backgroundTint="#d178b0"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/pink"
         android:src="@drawable/ic_baseline_add_alarm"
         app:layout_constraintBottom_toTopOf="@+id/lvAlarms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tp" />
+        app:layout_constraintTop_toBottomOf="@+id/timePicker"
+        android:contentDescription="add" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lvAlarms"
-        android:layout_width="406dp"
-        android:layout_height="389dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerButton" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAddAlarm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
