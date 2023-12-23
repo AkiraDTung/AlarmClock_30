@@ -10,18 +10,25 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alarmclock30.entities.Clock;
 import com.example.alarmclock30.R;
 
 import java.util.List;
+import java.util.Locale;
 
 public class AlarmAdapter  extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> {
 
     private OnItemClickListener onItemClickListener;
     private List<Clock> clocks;
     private Context context;
+
+    public AlarmAdapter(List<Clock> clocks, Context context) {
+        this.clocks = clocks;
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -33,6 +40,13 @@ public class AlarmAdapter  extends RecyclerView.Adapter<AlarmAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull AlarmAdapter.ViewHolder holder, int position) {
         Clock clock = clocks.get(position);
+        holder.time.setText(String.format(Locale.getDefault(),"%02d:%02d", clock.getHour(), clock.getMinute()));
+        holder.switchCompat.setChecked(clock.isEnabled());
+        holder.switchCompat.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -43,14 +57,20 @@ public class AlarmAdapter  extends RecyclerView.Adapter<AlarmAdapter.ViewHolder>
         return 0;
     }
 
+    public void setData(List<Clock> clocks) {
+        this.clocks.clear();
+        this.clocks.addAll(clocks);
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView name, amount;
-        ImageView more;
+        TextView time;
+        SwitchCompat switchCompat;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //name = itemView.findViewById(R.id.tvAccountName);
-            //amount = itemView.findViewById(R.id.tvAccountAmount);
+            time = itemView.findViewById(R.id.tvTime);
+            switchCompat = itemView.findViewById(R.id.btnSwitch);
         }
 
     }

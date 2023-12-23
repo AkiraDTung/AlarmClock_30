@@ -1,5 +1,7 @@
 package com.example.alarmclock30.entities;
 
+import com.google.gson.Gson;
+
 public class Clock {
     private int id;
     private int hour;
@@ -57,6 +59,14 @@ public class Clock {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
+    }
+
+    public static Clock fromJson(String json) {
+        return new Gson().fromJson(json, Clock.class);
     }
 }
 

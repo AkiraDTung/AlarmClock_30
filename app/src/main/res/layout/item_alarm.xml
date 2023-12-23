@@ -25,7 +25,7 @@
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/onoffswitch"
+            android:id="@+id/btnSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical" />
